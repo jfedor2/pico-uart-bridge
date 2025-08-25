@@ -44,17 +44,10 @@ typedef struct {
 	mutex_t usb_mtx;
 } uart_data_t;
 
-void uart0_irq_fn(void);
 void uart1_irq_fn(void);
 
 const uart_id_t UART_ID[CFG_TUD_CDC] = {
 	{
-		.inst = uart0,
-		.irq = UART0_IRQ,
-		.irq_fn = &uart0_irq_fn,
-		.tx_pin = 16,
-		.rx_pin = 17,
-	}, {
 		.inst = uart1,
 		.irq = UART1_IRQ,
 		.irq_fn = &uart1_irq_fn,
@@ -219,14 +212,9 @@ static inline void uart_read_bytes(uint8_t itf)
 	}
 }
 
-void uart0_irq_fn(void)
-{
-	uart_read_bytes(0);
-}
-
 void uart1_irq_fn(void)
 {
-	uart_read_bytes(1);
+	uart_read_bytes(0);
 }
 
 void uart_write_bytes(uint8_t itf)
